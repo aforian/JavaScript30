@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Console Tricks!</title>
+</head>
+<body>
+
+  <p onClick="makeGreen()">×BREAK×DOWN×</p>
+
+  <script>
+    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+
+    function makeGreen() {
+      const p = document.querySelector('p');
+      p.style.color = '#BADA55';
+      p.style.fontSize = '50px';
+      p.classList.add('ouch');
+
+      console.clear();
+
+      console.assert(p.classList.contains('ouch'), 'That is wrong!');
+    }
+
+    // Regular
+    console.log('hello');
+
+    // Interpolated
+    console.log('使用字串 %s 插值 %s!', '💩','第二個值');
+
+    let str1 = 'ES6 字串';
+    let str2 = 92391;
+    console.log(`使用字串 ${str1} 插值 ${str2}!`);
+
+    // Styled
+    console.log('%c 住手！你們不要再打了！', 'font-size: 80px; color:red; text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white, 0 0 10px black')
+
+    // warning!
+    console.warn('warning 會是黃色的，告訴你可能發生的危險');
+
+    // Error :|
+    console.error('Error 會是紅色，通常表示嚴重錯誤導致無法執行的問題');
+
+    // Info
+    console.info('Info 特色瀏覽器會有圖示，但Chrome沒有...');
+
+    // Testing
+    const p = document.querySelector('p');
+
+    // 類似 try catch 的測試功能
+    console.assert(p.classList.contains('ouch'), 'That is wrong!');
+
+    // clearing
+    // console.clear();
+
+    // Viewing DOM Elements
+    console.log(p); //檢視html
+    console.dir(p); //檢視property
+
+    // Grouping together
+    console.log(p);
+
+    // Grouping together
+    dogs.forEach(dog => {
+      console.groupCollapsed(`${dog.name}`);
+      console.log(`這是群組內元素log ${dog.name}`);
+      console.warn(`這是群組內元素警告 ${dog.name}`);
+      console.error(`這是群組內元素錯誤 ${dog.name}`);
+      console.log(`${dog.name} is ${dog.age} years old`);
+      console.log(`${dog.name} is ${dog.age * 7} dog years old`);
+      console.groupEnd(`${dog.name}`);
+    });
+
+    // counting
+    console.count('doctor');
+    console.count(p);
+    console.count(p);
+    console.count(p);
+    console.count('Doctor');
+    console.count('Doctor');
+
+    // timing
+    console.time('fetching data');
+    fetch('https://api.github.com/users/aforian')
+      .then(data => data.json())
+      .then(data => {
+        console.timeEnd('fetching data');
+        console.log(data);
+      });
+
+
+    console.table(dogs);
+
+  </script>
+</body>
+</html>
