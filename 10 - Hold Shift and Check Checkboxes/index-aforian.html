@@ -98,46 +98,59 @@
 <script>
   ;(function(){
 
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    // const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 
-    let isShifted = false;
+    // let isShifted = false;
 
+    // function handleCheckbox(e) {
 
+    //   if (!isShifted || !this.checked) return;
+
+    //   const checkboxesNow = Array.from(document.querySelectorAll('input[type="checkbox"]'));
+    //   const firstChecked = checkboxesNow.findIndex((checkbox) => {
+    //     return checkbox !== this && checkbox.checked === true;
+    //   });
+    //   const index = checkboxesNow.indexOf(this);
+
+    //   if (firstChecked != index) {
+
+    //     let min = firstChecked < index ? firstChecked : index;
+    //     let max = firstChecked > index ? firstChecked : index;
+
+    //     for (let i = min; i<= max; i++) {
+    //       checkboxesNow[i].checked = true;
+    //     }
+    //   }
+    // }
+    // checkboxes.forEach((checkbox) => {
+    //   checkbox.addEventListener('click', handleCheckbox);
+    // })
+    // document.addEventListener('keydown', (e) => {
+    //   if (isShifted || e.keyCode !== 16) return;
+    //   isShifted = true;
+    // });
+    // document.addEventListener('keyup', (e) => {
+    //   isShifted = false;
+    // })
+
+    const checkboxes = Array.from(document.querySelectorAll('input[type="checkbox"]'));
+    let lastCheck = null;
     function handleCheckbox(e) {
-
-      if (!isShifted || !this.checked) return;
-
-      const checkboxesNow = Array.from(document.querySelectorAll('input[type="checkbox"]'));
-      const firstChecked = checkboxesNow.findIndex((checkbox) => {
-        return checkbox !== this && checkbox.checked === true;
-      });
-      const index = checkboxesNow.indexOf(this);
-
-      if (firstChecked != index) {
-
-        let min = firstChecked < index ? firstChecked : index;
-        let max = firstChecked > index ? firstChecked : index;
-
-        for (let i = min; i<= max; i++) {
-          checkboxesNow[i].checked = true;
+      if (e.shiftKey && this.checked){
+        const nowCheckIndex = checkboxes.indexOf(this);
+        const lastCheckIndex = checkboxes.indexOf(lastCheck);
+        if (lastCheckIndex != nowCheckIndex) {
+          checkboxes.slice(
+              Math.min(lastCheckIndex, nowCheckIndex),
+              Math.max(lastCheckIndex, nowCheckIndex)
+          ).forEach((checkox) => {
+            checkox.checked = true;
+          });
         }
-
-        // console.log(`begin with: ${min}`);
-        // console.log(`end with: ${max}`);
-      }
+      };
+      lastCheck = this;
     }
-
-    checkboxes.forEach((checkbox) => {
-      checkbox.addEventListener('click', handleCheckbox);
-    })
-    document.addEventListener('keydown', (e) => {
-      if (isShifted || e.keyCode !== 16) return;
-      isShifted = true;
-    });
-    document.addEventListener('keyup', (e) => {
-      isShifted = false;
-    })
-
+    checkboxes.forEach((checkbox) => checkbox.addEventListener('click', handleCheckbox));
   })()
 
 </script>
